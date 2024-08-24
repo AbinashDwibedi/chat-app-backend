@@ -11,7 +11,13 @@ const app = express();
 
 app.use(express.json());
 // Express.js with CORS middleware
-app.use(cors({ origin: process.env.FRONTEND_SERVER, credentials: true }));
+app.use(cors({
+    origin: 'https://chatio-a9935.web.app', // Replace with your frontend URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+}));
+
 // app.use((req, res, next) => {
 //     res.header('Access-Control-Allow-Origin', 'https://chatio-a9935.web.app');
 //     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
