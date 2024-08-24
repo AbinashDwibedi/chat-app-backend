@@ -11,7 +11,7 @@ mongoose.connect(process.env.MONGO_URI).then(()=>console.log("mongoserver is con
 const app = express();
 
 app.use(express.json());
-app.use(cors({origin: process.env.FRONTEND_SERVER}));
+app.use(cors({origin: "https://chatio-a9935.web.app"}));
 app.use('/api/auth' , router)
 app.use('/api/message' , messageRoute)
 
@@ -24,7 +24,7 @@ const server = app.listen(port , ()=>{
 
 const io = new Server(server , {
     cors:{
-        origin: process.env.FRONTEND_SERVER,
+        origin: "https://chatio-a9935.web.app",
         credentials: true
     }
 })
