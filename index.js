@@ -12,16 +12,6 @@ const app = express();
 app.use(express.json());
 // Express.js with CORS middleware
 app.use(cors({ origin: process.env.FRONTEND_SERVER, credentials: true }));
-// app.use((req, res, next) => {
-//     res.header('Access-Control-Allow-Origin', 'https://chatio-a9935.web.app');
-//     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-//     res.header('Access-Control-Allow-Credentials', 'true');
-//     if (req.method === 'OPTIONS') {
-//         return res.status(200).end();
-//     }
-//     next();
-// });
 
 app.use('/api/auth' , router)
 app.use('/api/message' , messageRoute)
@@ -53,8 +43,8 @@ io.on("connection" , socket =>{
         onlineUsers.set(userId,socket.id);
         // console.log(userId)
     })
-    socket.on("send-msg", (data)=>{
-        const sendUserSocket = onlineUsers.get(data.to);
+    socket.on("send-msg", async(data)=>{
+        const sendUserSocket = await onlineUsers.get(data.to);
         if(sendUserSocket){
             socket.to(sendUserSocket).emit("message-rcv" , data.message)
         }
