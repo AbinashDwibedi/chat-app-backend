@@ -11,17 +11,17 @@ const app = express();
 
 app.use(express.json());
 // Express.js with CORS middleware
-app.use(cors({ origin: 'https://chatio-a9935.web.app', credentials: true }));
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://chatio-a9935.web.app');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    if (req.method === 'OPTIONS') {
-        return res.status(200).end();
-    }
-    next();
-});
+app.use(cors());
+// app.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Origin', 'https://chatio-a9935.web.app');
+//     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//     res.header('Access-Control-Allow-Credentials', 'true');
+//     if (req.method === 'OPTIONS') {
+//         return res.status(200).end();
+//     }
+//     next();
+// });
 
 app.use('/api/auth' , router)
 app.use('/api/message' , messageRoute)
@@ -29,6 +29,7 @@ app.use('/api/message' , messageRoute)
 app.get("/" , (req, res)=>{
     res.send(process.env.FRONTEND_SERVER)
 })
+
 
 const port = process.env.PORT || 3001
 
