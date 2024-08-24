@@ -37,18 +37,23 @@ const io = new Server(server , {
 //node.js global object
 
 global.onlineUsers = new Map();
-io.on("connection" , socket =>{
-    global.chatSocket = socket
-    socket.on("add-usr" , (userId)=>{
-        onlineUsers.set(userId,socket.id);
-        // console.log(userId)
-    })
-    socket.on("send-msg", (data)=>{
-        const sendUserSocket = onlineUsers.get(data.to);
-        if(sendUserSocket){
-            socket.to(sendUserSocket).emit("message-rcv" , data.message)
+io.on("connection", (socket) => {
+    console.log("New client connected:", socket.id);
+
+    socket.on("add-usr", (userId) => {
+        global.onlineUsers.set(userId, socket.id);
+    });
+
+    socket.on("send-msg", (data) => {
+        const sendUserSocket = global.onlineUsers.get(data.to);
+        if (sendUserSocket) {
+            socket.to(sendUserSocket).emit("message-rcv", data.message);
         }
-    })
-})
+    });
+
+    socket.on("disconnect", () => {
+        console.log("Client disconnected:", socket.id);
+    });
+});
 
 
