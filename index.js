@@ -43,8 +43,8 @@ io.on("connection" , socket =>{
         onlineUsers.set(userId,socket.id);
         // console.log(userId)
     })
-    socket.on("send-msg", async(data)=>{
-        const sendUserSocket = await onlineUsers.get(data.to);
+    socket.on("send-msg", (data)=>{
+        const sendUserSocket = onlineUsers.get(data.to);
         if(sendUserSocket){
             socket.to(sendUserSocket).emit("message-rcv" , data.message)
         }
