@@ -11,7 +11,7 @@ mongoose.connect(process.env.MONGO_URI).then(()=>console.log("mongoserver is con
 const app = express();
 
 app.use(express.json());
-app.use(cors({origin: process.env.FRONTEND_SERVER}));
+app.use(cors());
 app.use('/api/auth' , router)
 app.use('/api/message' , messageRoute)
 
