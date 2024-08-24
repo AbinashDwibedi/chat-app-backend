@@ -31,7 +31,8 @@ const io = new Server(server , {
     cors:{
         origin: process.env.FRONTEND_SERVER,
         credentials: true
-    }
+    },
+    transports: ['websocket']
 })
 
 //node.js global object
